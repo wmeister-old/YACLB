@@ -56,9 +56,9 @@
       (labels ((register-player-nick (player num)
 		 (setf (player-nick player) sender)
 		 (reply (format nil "Player #~D will be: ~A." num sender))))
-	(cond ((null (player-nick *player1*))
+	(cond ((player-nick *player1*)
 	       (register-player-nick *player1* 1))
-	      ((and (null (player-nick *player2*))
+	      ((and (player-nick *player2*)
 		    (not (equal sender (player-nick *player1*))))
 	       (progn (register-player-nick *player2* 2)
 		      (set-game-state :team-selection)))))))
@@ -67,7 +67,7 @@
     (when (and (= 1 num-args)
 	       (game-state-eq :team-selection)) ;; TODO check for sender in *player1/2*, also ensure they havnt chosen yet
       (let ((pokemon-id (parse-integer (car args) :junk-allowed t)))
-	(unless (null pokemon-id) ;; do i need to call null?
+	(unless pokemon-id ;; do i need to call null?
 	  (when (array-in-bounds-p +pokemon+ pokemon-id)
 	    (let ((pokemon-name (getf (aref +pokemon+ pokemon-id) :name))) ;; TODO set the selection and update the game state if both players have chosen
 	      (reply (format nil "~A choose ~A." sender pokemon-name))))))))
