@@ -2,7 +2,7 @@
 (in-package :irc)
 
 (defun second (l)
-  (first (rest l)))
+  (car (cdr l)))
 
 (defun split-on-spaces (str &optional l)
   (let ((str (string-trim " " str)))
@@ -19,14 +19,14 @@
 (defmacro defcmd (trigger func)
   `(add-hook *connection* 'irc-privmsg-message #'(lambda (message)
 						   (when (equal (concatenate 'string "." ,trigger)
-								(first (split-on-spaces (second (arguments message)))))
+								(car (split-on-spaces (second (arguments message)))))
 						     (let* ((args (cdr (split-on-spaces (second (arguments message)))))
 							    (num-args (length args))
 							    (sender (source message)))
 						       ,func)))))
 
 (defmacro reply (str)
-  `(privmsg *connection* (first (arguments message)) ,str))
+  `(privmsg *connection* (car (arguments message)) ,str))
 
 (defun set-game-state (state)
   (setq *game-state* state))
@@ -79,7 +79,7 @@
 
 
 (remove-hooks *connection* 'irc-privmsg-message)
-;(cmd (privmsg *connection* (first (arguments message)) "words 4 u"))
+;(cmd (privmsg *connection* (car (arguments message)) "words 4 u"))
 ;(macroexpand '(cmd "foo" (reply "baz")))
 ;; (privmsg *connection* "##the_basement" "hello pa-pa.")
 ;(macroexpand '(reply "foo"))
