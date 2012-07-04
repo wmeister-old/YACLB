@@ -1,5 +1,4 @@
 (ql:quickload "cl-irc")
-(in-package :irc)
 
 (defun second (l)
   (car (cdr l)))
@@ -17,16 +16,16 @@
   (format nil (concatenate 'string "~{~A" sep "~}") arg))
 
 (defmacro defcmd (trigger func)
-  `(add-hook *connection* 'irc-privmsg-message #'(lambda (message)
+  `(irc:add-hook *connection* 'irc::irc-privmsg-message #'(lambda (message)
 						   (when (equal (concatenate 'string "." ,trigger)
-								(car (split-on-spaces (second (arguments message)))))
-						     (let* ((args (cdr (split-on-spaces (second (arguments message)))))
+								(car (split-on-spaces (second (irc:arguments message)))))
+						     (let* ((args (cdr (split-on-spaces (second (irc:arguments message)))))
 							    (num-args (length args))
-							    (sender (source message)))
+							    (sender (irc:source message)))
 						       ,func)))))
 
 (defmacro reply (str)
-  `(privmsg *connection* (car (arguments message)) ,str))
+  `(irc:privmsg *connection* (car (irc:arguments message)) ,str))
 
 (defun set-game-state (state)
   (setq *game-state* state))
@@ -41,8 +40,8 @@
 
 (defstruct player nick)
 
-(defvar *connection* (connect :nickname "yaclb9" :server "irc.freenode.net"))
-(setq *connection* (connect :nickname "yaclb12" :server "irc.freenode.net"))
+(defvar *connection* (irc:connect :nickname "yaclb9" :server "irc.freenode.net"))
+;(setq *connection* (connect :nickname "yaclb12" :server "irc.freenode.net"))
 (defvar *player1* (make-player))
 (defvar *player2* (make-player))
 (defvar *game-state* :match-making)
@@ -72,25 +71,10 @@
 	    (let ((pokemon-name (getf (aref +pokemon+ pokemon-id) :name))) ;; TODO set the selection and update the game state if both players have chosen
 	      (reply (format nil "~A choose ~A." sender pokemon-name))))))))
 
-(defcmd "sender" (reply (format nil "~A" (source message))))
+(defcmd "sender" (reply (format nil "~A" (irc:source message))))
 
-(join *connection* "##the_basement")
-(read-message-loop *connection*)
+(irc:join *connection* "##the_basement")
+(irc:join *connection* "##the_basement2")
+(irc:read-message-loop *connection*)
 
-
-(remove-hooks *connection* 'irc-privmsg-message)
-;(cmd (privmsg *connection* (car (arguments message)) "words 4 u"))
-;(macroexpand '(cmd "foo" (reply "baz")))
-;; (privmsg *connection* "##the_basement" "hello pa-pa.")
-;(macroexpand '(reply "foo"))
-
-;(defun parse (str)
-;  (when (eq (char str 0) #\.)
-;    (split-on-spaces (subseq str 1))))
-
-;(match ".echo baz bar")
-
-;(defun my-hook (message)
-;     (print (arguments message)))
-
-;(add-hook *connection* 'irc-privmsg-message #'my-hook)
+;(irc:remove-hooks *connection* 'irc::irc-privmsg-message)
