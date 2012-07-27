@@ -1,3 +1,7 @@
 (in-package :yaclb)
 
-(defvar *connection* (irc:connect :nickname "yaclb9" :server "irc.freenode.net"))
+(defvar *connection* nil)
+(defvar *channels* '("##the_basement"))
+(defvar *nickname* "yaclb")
+(defvar *server* "irc.freenode.net")
+(defvar *commands* '())
