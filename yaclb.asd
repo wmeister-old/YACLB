@@ -5,7 +5,7 @@
   :version "0.1.0"
   :author "William Meister <wmeister86@gmail.com>"
   :licence "Public Domain"
-  :depends-on (:cl-irc)
+  :depends-on (:cl-irc :inferior-shell)
   :components ((:file "package")
 	       (:file "string"
 		      :depends-on ("package"))
