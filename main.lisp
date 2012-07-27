@@ -2,8 +2,8 @@
 
 (defun run ()
   (setq *connection* (irc:connect :nickname *nickname* :server *server*))
-  (join-channels *channels*)
-  (register-commands *commands*)
+  (join-channels)
+  (register-commands)
   (irc:read-message-loop *connection*))
 
 
