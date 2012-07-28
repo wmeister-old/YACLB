@@ -9,12 +9,14 @@
   :components ((:file "package")
 	       (:file "string"
 		      :depends-on ("package"))
+	       (:file "list"
+		      :depends-on ("package"))
 	       (:file "var"
 		      :depends-on ("package"))
 	       (:file "macro"
 		      :depends-on ("string"))
 	       (:file "command"
-		      :depends-on ("var" "macro"))
+		      :depends-on ("var" "macro" "list"))
 	       (:file "irc"
 		      :depends-on ("var"))
 	       (:file "main"
