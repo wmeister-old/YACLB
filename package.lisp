@@ -1,3 +1,3 @@
 (defpackage :yaclb
-  (:use :common-lisp :cl-irc)
+  (:use :common-lisp)
   (:export :run))
