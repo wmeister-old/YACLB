@@ -5,3 +5,5 @@
 (defvar *nickname* "yaclb")
 (defvar *server* "irc.freenode.net")
 (defvar *commands* nil)
+
+(clouchdb:set-connection :name "yaclb")
