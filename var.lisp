@@ -4,4 +4,4 @@
 (defvar *channels* '("##the_basement"))
 (defvar *nickname* "yaclb")
 (defvar *server* "irc.freenode.net")
-(defvar *commands* '())
+(defvar *commands* nil)
