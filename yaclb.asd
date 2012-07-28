@@ -5,7 +5,7 @@
   :version "0.1.0"
   :author "William Meister <wmeister86@gmail.com>"
   :licence "Public Domain"
-  :depends-on (:cl-irc :inferior-shell)
+  :depends-on (:cl-irc :inferior-shell :clouchdb)
   :components ((:file "package")
 	       (:file "string"
 		      :depends-on ("package"))
